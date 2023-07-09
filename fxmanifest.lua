@@ -1,6 +1,8 @@
 fx_version 'cerulean'
 game 'gta5'
 lua54 'yes'
+author 'C3'
+description 'LeaderMenu made for GANG SERVERS!'
 
 files {
     'html/index.html',
@@ -28,6 +30,6 @@ escrow_ignore {
     'html/**/**/*.*'
 }
 
-export 'inFFA' -- only client sided
+export 'inleadermenuc3' -- only client sided
 
--- exports.ultra_ffa:inFFA() | returns true if is in ffa and false if not
+-- exports.ultra_leadermenuc3:inleadermenuc3() | returns true if is in leadermenuc3 and false if not

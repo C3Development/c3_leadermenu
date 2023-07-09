@@ -1,4 +1,4 @@
-# ffa
+# c3_leadermenu
 
 A FiveM Free-For-All Script, based on the [ESX-Framework](https://github.com/esx-framework/esx-legacy)
 

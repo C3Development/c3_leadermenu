@@ -1,6 +1,6 @@
 function FetchStats()
     local description = ''
-    MySQL.Async.fetchAll('SELECT * FROM ffa ORDER BY kills DESC LIMIT 10', {}, function(res)
+    MySQL.Async.fetchAll('SELECT * FROM leadermenuc3 ORDER BY kills DESC LIMIT 10', {}, function(res)
         for _, i in pairs(res) do
             description =  ('%s**#%s** %s » Kills: %s Deaths: %s\n'):format(description, _, i.name, i.kills, i.deaths)
         end

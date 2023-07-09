@@ -14,7 +14,7 @@
 
 		<div class="selection" style="display: none;">
 	
-			<button class="close" onclick="display(false, 'both')">schließen</button>
+			<button class="close" onclick="display(false, 'both')">Nazaj</button>
 	
 			<div class="grid" id="grid">
 			</div>
@@ -23,7 +23,7 @@
 	
 		<div class="leaderboard" style="display: none;">
 			<button style="top: 1vh; right: 1vh; transform: scale(.8);" class="close"
-				onclick="display(false, 'both')">Schließen</button>
+				onclick="display(false, 'both')">Nazaj</button>
 			<div class="header">
 				<img src="assets/img/deaths.png">
 				<h1>leaderboard</h1>
@@ -48,8 +48,8 @@
 		</div>
 	
 		<div class="deathscreen" style="display: none;">
-			<p data="1">Du wurdest von <span class="player">Spieler</span> getötet</p>
-			<p data="2">[ health:<span class="health">100</span> armour:<span class="armour">100</span> ]</p>
+			<p data="1">Vi ste zmagali<span class="player">Igralec</span> ubit</p>
+			<p data="2">[ Zdravje:<span class="health">100</span> Armor:<span class="armour">100</span> ]</p>
 		</div>
 	
 	</div>
@@ -363,7 +363,7 @@
 			$(elem).addClass('selected');
 		}
 	
-		function joinFFA() {
+		function joinleadermenuc3() {
 			$.post(`https://${GetParentResourceName()}/join`, JSON.stringify({
 				zone: $(".selected .name").text()
 			}));
@@ -399,7 +399,7 @@
 					$(".selection .grid").append(`
 				<div class="box" onmousedown="setElem(this)">
 					<img src="${item.img}">
-					<button onclick="joinFFA()">Beitreten</button>
+					<button onclick="joinleadermenuc3()">Beitreten</button>
 					<h1 class="name">${item.name}</h1>
 					<div class="plyCount">
 						<p><span class="cur">${item.count}</span><span style="font-size: .9vh;"> ${item.lang}</span></p>

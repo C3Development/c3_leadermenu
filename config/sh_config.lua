@@ -2,7 +2,7 @@
 -- change this in your ambulancejob in the client/main.lua
 --=================================================================================--
 -- AddEventHandler('esx:onPlayerDeath', function(data)
--- 	if not exports.ultra_ffa:inFFA() then
+-- 	if not exports.ultra_leadermenuc3:inleadermenuc3() then
 -- 		OnPlayerDeath()
 -- 	end
 -- end)
@@ -22,7 +22,7 @@ Config = {
 			vector3(570.2548, 2796.546, 42.0148)
 		},
 		Blip = {
-			Title = 'FFA',
+			Title = 'leadermenuc3',
 			Colour = 50,
 			ID = 119,
 			Scale = 1.0
@@ -31,7 +31,7 @@ Config = {
 			CMD = "stats",
 			KeyMapping = "PAGEUP"
 		},
-		Ped = { -- if a Ped should stand on the FFA Marker
+		Ped = { -- if a Ped should stand on the leadermenuc3 Marker
 			Enable = false,
 			Model = "s_m_m_prisguard_01",
 		},
@@ -48,14 +48,14 @@ Config = {
 			}
 		},
 		Language = {
-			Player = 'Spieler', -- translate it to your language
-			Died = "Du bist gestorben",
-			KillerMSG = 'Du hast %s getötet', -- the killer receives this message
-			KilledMSG = 'Du wurdest von %s getötet', -- the killed one / loser receives this message
-			PressE = 'Drücke %s um die Auswahl zu öffnen', -- %s = ~INPUT_CONTEXT~ / E
-			LeftFFA = 'Du hast das FFA verlassen!',
-			ZoneFull = 'Die Zone ist voll!',
-			MoneyMSG = 'Du hast %s getötet + $%s'
+			Player = 'Igralec', -- translate it to your language
+			Died = "Vi ste mrtvi!",
+			KillerMSG = 'Vi imate %s Ubitih', -- the killer receives this message
+			KilledMSG = 'Vi ste zmagali %s Ubitit', -- the killed one / loser receives this message
+			PressE = 'Pritisnite E %s da odprete izbiro', -- %s = ~INPUT_CONTEXT~ / E
+			Leftleadermenuc3 = 'Zapustili ste leadermenuc3!',
+			ZoneFull = 'Zone je polna!',
+			MoneyMSG = 'Ubil si %njo + $%s'
 		},
 		Health = {
 			AddHealthOnKill = {
@@ -84,23 +84,23 @@ Config = {
 			Count = math.random(100, 240)
 		},
 		CMD = {
-			Quit = 'quitffa',
-			Enabled = true, -- if you should be able to show the ffa selection with a command
-			Name = 'ffa',
+			Quit = 'quitleadermenuc3',
+			Enabled = true, -- if you should be able to show the leadermenuc3 selection with a command
+			Name = 'leadermenuc3',
 			KeyMapping = true, -- Enabled has to be true | if you want to have the command bindable
 			Standard = 'F4' -- KeyMapping has to be true
 		},
 		CLNotify = function(msg)
-			TriggerEvent('notifications', '', 'FFA - SYSTEM', msg)
+			TriggerEvent('notifications', '', 'leadermenuc3 - SYSTEM', msg)
 		end,
 		SVNotify = function(target, msg)
-			TriggerClientEvent('notifications', target, '', 'FFA - SYSTEM', msg)
+			TriggerClientEvent('notifications', target, '', 'leadermenuc3 - SYSTEM', msg)
 		end,
 	},
 	Zone = {
-		['würfelpark'] = {
+		['parker kock'] = {
 			asd = 0, -- DO NOT TOUCH IT
-			name = 'würfelpark',
+			name = 'parkerkock',
 			dim = 32,
 			count = 32,
 			img = 'assets/img/LegionSquare-GTAV.webp',
@@ -174,9 +174,9 @@ Config = {
 				vector4(1609.623, 2670.542, 45.56488, 147.8673)
 			}
 		},
-		['dach'] = {
+		['kopalnica'] = {
 			asd = 0, -- DO NOT TOUCH IT
-			name = 'dach',
+			name = 'kopalnica',
 			dim = 86,
 			count = 12,
 			img = 'https://cdn.discordapp.com/attachments/1012341309471723570/1013240484514250794/RockfordPlaza-GTAV.png',
@@ -197,9 +197,9 @@ Config = {
 				vector4(-183.7961, -199.2265, 85.2247, 243.1413)
 			}
 		},
-		['marktplatz'] = {
+		['trgovina'] = {
 			asd = 0, -- DO NOT TOUCH IT
-			name = 'marktplatz',
+			name = 'trgovina',
 			dim = 3122,
 			count = 30,
 			img = 'https://cdn.discordapp.com/attachments/1012341309471723570/1013239584987033672/unknown.png',
@@ -223,9 +223,9 @@ Config = {
 				vector4(370.0265, -380.4681, 46.47663, 351.8302)
 			}
 		},
-		['golfplatz'] = {
+		['golf'] = {
 			asd = 0, -- DO NOT TOUCH IT
-			name = 'golfplatz',
+			name = 'golf',
 			dim = 1232,
 			count = 100,
 			img = 'https://cs2.gtaall.eu/attachments/2018-09/original/9aa5a795f278c9a51f2309bd0bd86cb865daef08/9127-GTA5-2018-09-20-11-32-38-96.jpg',
@@ -250,9 +250,9 @@ Config = {
 				vector4(-1255.38, 74.89209, 52.62662, 242.3832)
 			}
 		},
-		['hafen'] = {
+		['pristanisce'] = {
 			asd = 0, -- DO NOT TOUCH IT
-			name = 'hafen',
+			name = 'pristanisce',
 			dim = 4332,
 			count = 50,
 			img = 'https://cdn.discordapp.com/attachments/1012341309471723570/1013240484866564106/Terminal-GTAV.png',
@@ -275,9 +275,9 @@ Config = {
 				vector4(1017.483, -3133.131, 5.900769, 10.12412)
 			}
 		},
-		['berg'] = {
+		['gora'] = {
 			asd = 0, -- DO NOT TOUCH IT
-			name = 'berg',
+			name = 'gora',
 			dim = 200,
 			count = 100,
 			img = 'https://cdn.discordapp.com/attachments/1012341309471723570/1013239785600602163/unknown.png',
@@ -331,9 +331,9 @@ Config = {
 				vector4(1291.413, 2926.976, 41.37663, 285.0942)
 			}
 		},
-		['brücke'] = {
+		['most'] = {
 			asd = 0, -- DO NOT TOUCH IT
-			name = 'brücke',
+			name = 'most',
 			dim = 32632,
 			count = 20,
 			img = 'https://cdn.discordapp.com/attachments/1012341309471723570/1013240950446903356/unknown.png',

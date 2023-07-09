@@ -1,5 +1,5 @@
 ESX = nil
-local isUIopen, isInFFA, draw, isLBopen, spawned = false
+local isUIopen, isInleadermenuc3, draw, isLBopen, spawned = false
 local selected = nil
 local lastPos = nil
 
@@ -11,9 +11,9 @@ Citizen.CreateThread(function()
 end)
 
 ------------------------------------------------- Events
-RegisterNetEvent('ardi:quitffa')
-AddEventHandler('ardi:quitffa', function()
-    if inFFA() then
+RegisterNetEvent('c3_leadermenu:quitleadermenuc3')
+AddEventHandler('c3_leadermenu:quitleadermenuc3', function()
+    if inleadermenuc3() then
         if IsPlayerDead(PlayerPedId()) then
             TriggerEvent(Config.Settings.ESXStuff.Revive)
             SendNUIMessage({action = 'deathscreen', off = true})
@@ -30,29 +30,29 @@ AddEventHandler('ardi:quitffa', function()
                 SetPedInfiniteAmmo(PlayerPedId(), false)
             end
         end)
-        isInFFA, draw = false
+        isInleadermenuc3, draw = false
         selected = nil
         lastPos = nil
-        Config.Settings.CLNotify(Config.Settings.Language.LeftFFA)
+        Config.Settings.CLNotify(Config.Settings.Language.Leftleadermenuc3)
     end
 end)
 
-RegisterNetEvent('ardi:set:pos')
-AddEventHandler('ardi:set:pos', function(pos)
+RegisterNetEvent('c3_leadermenu:set:pos')
+AddEventHandler('c3_leadermenu:set:pos', function(pos)
     ESX.Game.Teleport(PlayerPedId(), pos)
-    isInFFA = true
+    isInleadermenuc3 = true
 end)
 
-RegisterNetEvent('ardi:ffa:healPlayer')
-AddEventHandler('ardi:ffa:healPlayer', function()
+RegisterNetEvent('c3_leadermenu:leadermenuc3:healPlayer')
+AddEventHandler('c3_leadermenu:leadermenuc3:healPlayer', function()
     SetEntityHealth(PlayerPedId(), Config.Settings.Health.AddHealthOnKill.Health)
     AddArmourToPed(PlayerPedId(), Config.Settings.Health.AddHealthOnKill.Armour)
     SetPedArmour(PlayerPedId(), Config.Settings.Health.AddHealthOnKill.Armour)
 end)
 
-RegisterNetEvent('ardi:ffa:hud')
-AddEventHandler('ardi:ffa:hud', function()
-    ESX.TriggerServerCallback('ardi:get:stats', function(data)
+RegisterNetEvent('c3_leadermenu:leadermenuc3:hud')
+AddEventHandler('c3_leadermenu:leadermenuc3:hud', function()
+    ESX.TriggerServerCallback('c3_leadermenu:get:stats', function(data)
         for _, i in pairs(data) do
             SendNUIMessage({
                 action = 'stats',
@@ -68,26 +68,26 @@ end)
 ------------------------------------------------- Event Handler
 AddEventHandler('playerSpawned', function()
     if not spawned then
-        ESX.TriggerServerCallback('ardi:get:stats', function(data)
+        ESX.TriggerServerCallback('c3_leadermenu:get:stats', function(data)
             spawned = true
             for _, i in pairs(data) do
-                if i.isinffa == 1 and not isInFFA then
-                    isUIopen, isInFFA, draw = false
+                if i.isinleadermenuc3 == 1 and not isInleadermenuc3 then
+                    isUIopen, isInleadermenuc3, draw = false
                     Wait(500)
-                    ExecuteCommand("quitffa")
+                    ExecuteCommand("quitleadermenuc3")
                 end
             end
         end)
-        TriggerServerEvent('ardi:send:ffa:html')
+        TriggerServerEvent('c3_leadermenu:send:leadermenuc3:html')
         spawned = true
     end
 end)
 
 AddEventHandler(Config.Settings.ESXStuff.OnPlayerDeath, function(data)
-    if isInFFA then
+    if isInleadermenuc3 then
         if data.killerServerId ~= nil then
             local killerPed = GetPlayerPed(data.killerClientId)
-            TriggerServerEvent('ardi:ffa:killed', data.killerServerId)
+            TriggerServerEvent('c3_leadermenu:leadermenuc3:killed', data.killerServerId)
             if Config.Settings.Deathscreen then
                 SendNUIMessage({
                     action = 'deathscreen',
@@ -114,26 +114,26 @@ AddEventHandler(Config.Settings.ESXStuff.OnPlayerDeath, function(data)
         SendNUIMessage({action = 'deathscreen', off = true})
         TriggerEvent(Config.Settings.ESXStuff.Revive)
         Wait(800)
-        TriggerEvent('ardi:ffa:healPlayer')
+        TriggerEvent('c3_leadermenu:leadermenuc3:healPlayer')
     end
 end)
 
 ------------------------------------------------- CMD + KeyMapping
 if Config.Settings.CMD.Enabled then
     if Config.Settings.CMD.KeyMapping then
-        RegisterKeyMapping(Config.Settings.CMD.Name, 'Open FFA', 'keyboard', Config.Settings.CMD.Standard)
+        RegisterKeyMapping(Config.Settings.CMD.Name, 'Open leadermenuc3', 'keyboard', Config.Settings.CMD.Standard)
     end
     RegisterCommand(Config.Settings.CMD.Name, function()
-        if not isUIopen and not isInFFA and not isLBopen then
+        if not isUIopen and not isInleadermenuc3 and not isLBopen then
             display(true, 'selection')
         end
     end, false)
 end
 
-RegisterKeyMapping(Config.Settings.Stats.CMD, 'Open FFA Stats', 'keyboard', Config.Settings.Stats.KeyMapping)
+RegisterKeyMapping(Config.Settings.Stats.CMD, 'Open leadermenuc3 Stats', 'keyboard', Config.Settings.Stats.KeyMapping)
 RegisterCommand(Config.Settings.Stats.CMD, function()
     if not isLBopen and not isUIopen then
-        ESX.TriggerServerCallback('ardi:get:all:stats', function(data)
+        ESX.TriggerServerCallback('c3_leadermenu:get:all:stats', function(data)
             for _, i in pairs(data) do
                 SendNUIMessage({
                     action = 'leaderboard',
@@ -162,14 +162,14 @@ end)
 
 RegisterNUICallback('join', function(data, cb)
     selected = string.lower(data.zone)
-    ESX.TriggerServerCallback('ardi:get:count', function(zone)
+    ESX.TriggerServerCallback('c3_leadermenu:get:count', function(zone)
         if zone[selected].asd == zone[selected].count then
             Config.Settings.CLNotify(Config.Settings.Language.ZoneFull)
         else
             lastPos = GetEntityCoords(PlayerPedId())
-            TriggerServerEvent('ardi:join:ffa', selected)
+            TriggerServerEvent('c3_leadermenu:join:leadermenuc3', selected)
             drawSphere(Config.Zone[selected].middle, Config.Zone[selected].scale)
-            TriggerEvent('ardi:ffa:hud')
+            TriggerEvent('c3_leadermenu:leadermenuc3:hud')
             if Config.Settings.Health.AddHealthOnEnter.Enabled then
                 SetEntityHealth(PlayerPedId(), Config.Settings.Health.AddHealthOnEnter.Health)
                 AddArmourToPed(PlayerPedId(), Config.Settings.Health.AddHealthOnEnter.Armour)
@@ -190,7 +190,7 @@ function drawSphere(pos, scale)
     notify = false
     CreateThread(function()
         while draw do
-            if isInFFA then
+            if isInleadermenuc3 then
                 DrawSphere(pos, scale, Config.Settings.Color.r, Config.Settings.Color.g, Config.Settings.Color.b, Config.Settings.Color.a)
                 if checkSphere(pos, scale) then
                     if Config.Settings.KillPlayerOnZoneLeave then
@@ -199,7 +199,7 @@ function drawSphere(pos, scale)
                         ESX.Game.Teleport(PlayerPedId(), Config.Zone[selected].position[math.random(1, #Config.Zone[selected].position)])
                     end
                     if not notify then
-                        TriggerEvent('notifications', '', 'SYSTEM', Config.Settings.Language.LeftFFA)
+                        TriggerEvent('notifications', '', 'SISTEM', Config.Settings.Language.Leftleadermenuc3)
                         notify = true
                     end
                 else
@@ -239,15 +239,15 @@ function nearLocation(pos, scale)
     return false
 end
 
-function inFFA()
-    return isInFFA
+function inleadermenuc3()
+    return isInleadermenuc3
 end
 
 function display(bool, which)
     isUIopen = bool
     SetNuiFocus(bool, bool)
     SendNUIMessage({action = which, display = bool})
-    ESX.TriggerServerCallback('ardi:get:count', function(data)
+    ESX.TriggerServerCallback('c3_leadermenu:get:count', function(data)
         if (bool and which == 'selection') then
             for _, i in pairs(data) do
                 SendNUIMessage({
@@ -299,7 +299,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
         local letSleep = true
-        if nearLocation(Config.Settings.Position, Config.Settings.Marker.DrawDistance) and not isUIopen and not isInFFA then
+        if nearLocation(Config.Settings.Position, Config.Settings.Marker.DrawDistance) and not isUIopen and not isInleadermenuc3 then
             letSleep = false
             if Config.Settings.Marker.Enable then
                 for _, i in pairs(Config.Settings.Position) do
@@ -324,11 +324,11 @@ end)
 --         Wait(0)
 --     end
 
---     TriggerServerEvent('ardi:send:ffa:html')
+--     TriggerServerEvent('c3_leadermenu:send:leadermenuc3:html')
 -- end)
 
-RegisterNetEvent('ardi:get:ffa:html')
-AddEventHandler('ardi:get:ffa:html', function(html)
+RegisterNetEvent('c3_leadermenu:get:leadermenuc3:html')
+AddEventHandler('c3_leadermenu:get:leadermenuc3:html', function(html)
     SendNUIMessage({
         ad6brKTUm_asda = "agkdlm3 :_;ad. q3 €µ@@qödm,km,",
         rha6diTZFIOmaduaODP5geub_____asdasd = html
